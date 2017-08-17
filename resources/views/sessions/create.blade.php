@@ -1,27 +1,34 @@
-@extends('layouts.master')
+@extends('layouts.form')
 
-@section('content')
-	<h1>Login</h1>
+@section('title')
+	Login
+@endsection
 
-	<form method="POST" action="/login">
+@section('style')
+	.form-signin input[type="email"] {
+	  margin-bottom: -1px;
+	  border-bottom-right-radius: 0;
+	  border-bottom-left-radius: 0;
+	}
+	.form-signin input[type="password"] {
+	  margin-bottom: 10px;
+	  border-top-left-radius: 0;
+	  border-top-right-radius: 0;
+	}
+@endsection
+
+@section('form')
+	<form method="POST" action="/login" class="form-signin">
 		{{csrf_field()}}
 
-		<div>
-			<label for="email">Email:</label>
-			<input type="email" id="email" name="email" required>
-		</div>
+		<h2 class="form-signin-heading">Sign In</h2>
 
-		<div>
-			<label for="password">Password:</label>
-			<input type="password" id="password" name="password" required>
-		</div>
+		<label class="sr-only" for="email">Email:</label>
+		<input class="form-control" type="email" id="email" name="email" placeholder="Email Address" required>
 
-		<div>
-			<button type="submit">Log In</button>
-		</div>
+		<label class="sr-only" for="password">Password:</label>
+		<input class="form-control" type="password" id="password" name="password" placeholder="Password" required>
 
-		<div>
-			@include('components.errors')
-		</div>
+		<button class="btn btn-lg btn-primary btn-block" type="submit">Log In</button>
 	</form>
 @endsection

@@ -1,28 +1,36 @@
-@extends('layouts.master')
+@extends('layouts.task')
+
+@section('style')
+	.task {
+		background-color: #eee;
+		border: 1px solid #ccc;
+		border-radius: 5px;
+		margin-bottom: 5px;
+		padding: 5px;
+	}
+
+	input, textarea {
+		margin-bottom: 5px;
+	}
+@endsection
+
+@section('title')
+	Tasks
+@endsection
 
 @section('content')
-	<h1>Create a Task</h1>
-
 	<form method="POST" action="/tasks">
 		{{csrf_field()}}
 
-		<div>
-			<label for="title">Title:</label>
-			<input type="text" id="title" name="title" required>
-		</div>
+		<h2>Create A Task</h2>
 
-		<div>
-			<label for="description">Description:</label>
-			<input type="text" id="description" name="description">
-		</div>
+		<label class="sr-only" for="title">Title:</label>
+		<input class="form-control" type="text" id="title" name="title" placeholder="Title" required>
 
-		<div>
-			<button type="submit">Add</button>
-		</div>
+		<label class="sr-only" for="description">Description:</label>
+		<textarea class="form-control" type="text" id="description" name="description" placeholder="Description (Optional)"></textarea>
 
-		<div>
-			@include('components.errors')
-		</div>
+		<button class="btn btn-primary" type="submit">Add</button>
 	</form>
-
 @endsection
+
