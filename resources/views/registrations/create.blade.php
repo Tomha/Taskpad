@@ -1,31 +1,11 @@
-@extends('layouts.form')
+@extends('layouts.auth')
+
+@section('css')
+	"css/register.css"
+@endsection
 
 @section('title')
 	Registration
-@endsection
-
-@section('style')
-	.form-signin input[type="text"] {
-		margin-bottom: -1px;
-		border-bottom-right-radius: 0;
-		border-bottom-left-radius: 0;
-	}
-	.form-signin input[type="email"] {
-		margin-bottom: -1px;
-		border-radius: 0;
-	}
-	#password {
-		margin-bottom: -1px;
-		border-radius: 0;
-	}
-	#password_confirmation {
-		margin-bottom: 10px;
-		border-top-left-radius: 0;
-		border-top-right-radius: 0;
-	}
-	.btn {
-		margin-bottom: 10px;
-	}
 @endsection
 
 @section('form')
@@ -38,7 +18,7 @@
 		<input class="form-control" type="text" id="name" name="name" placeholder="Name" required>
 
 		<label class="sr-only" for="email">Email:</label>
-		<input class="form-control" type="email" id="email" name="email" placeholder="Email" required>
+		<input class="form-control" type="email" id="email_register" name="email" placeholder="Email" required>
 
 		<label class="sr-only" for="password">Password:</label>
 		<input class="form-control" type="password" id="password" name="password" placeholder="Password" required>

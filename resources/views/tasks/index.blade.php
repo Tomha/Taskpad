@@ -1,15 +1,5 @@
 @extends('layouts.task')
 
-@section('style')
-	.task {
-		background-color: #eee;
-		border: 1px solid #ccc;
-		border-radius: 5px;
-		margin-bottom: 5px;
-		padding: 5px;
-	}
-@endsection
-
 @section('title')
 	Tasks
 @endsection
