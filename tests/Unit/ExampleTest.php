@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
+use tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 

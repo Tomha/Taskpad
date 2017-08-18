@@ -8,7 +8,15 @@ This was my first time setting up Laravel, so my instructions may be a bit spott
 2. CD to your desired project directory
 3. `git clone https://github.tom/tomha/Taskpad`
 4. `composer install` (Requires composer)
-5. Create a MySQL database called "taskpad"
+5. Create a MySQL database called "taskpad", and one called "taskpad_testing" for unit tests
 6. Copy `.env.example` to a file `.env` and set credentials/addresses for your database
 7. `php artisan migrate`
 8. Things *should* be setup, so use `php artisan serve` then visit the address for your server, `localhost:8000` in my case.
+
+# Tests
+There are a couple of basic unit tests which can be run like so:
+1. Edit `.env` so that `DB_DATABASE=taskpad_testing`
+2. Create a MySQL database `taskpad_testing`
+3. Run `php artisan migrate`
+4. Run the tests with `phpunit`
+
