@@ -101,7 +101,12 @@
 		<label class="sr-only" for="description">Description:</label>
 		<textarea class="form-control" type="text" id="description" name="description" placeholder="Description (Optional)"></textarea>
 
-		<button class="btn btn-primary" type="submit">Add</button>
+		<div>
+			<button class="btn btn-primary" type="submit">Add</button>
+			<a class="btn btn-secondary" href="/tasks">Cancel</a>
+		</div>
+
+
 	</form>
 @endsection
 
