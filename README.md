@@ -12,9 +12,8 @@ key:generate`
 5. `nanobox run php artisan serve --host 0.0.0.0`
 6. Visit Taskpad at taskpad:8000 on your browser of choice
 
-# Tests (OUTDATE)
-**Note:** If using Nanobox, this will require a different method. I've 
-yet to sort this out.
+# Tests (OUTDATED)
+**Note:** This was how I did it under Homestead, I'm yet to sort this out for Nanobox.
 There are a couple of basic unit tests which can be run like so:
 1. Edit `.env` so that `DB_DATABASE=taskpad_testing`
 2. Create a MySQL database `taskpad_testing`
