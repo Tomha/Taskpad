@@ -1,0 +1,38 @@
+run.config:
+  engine: php
+  engine.config:
+    runtime: php-7.0
+    webserver: nginx
+    document_root: public
+    extensions:
+      - pdo
+      - pdo_mysql
+      - mbstring
+      - tokenizer
+      - session
+      - zip
+      - dom
+      - xml
+      - ctype
+      - xmlwriter
+
+deploy.config:
+  before_live:
+    web.main:
+      - php artisan migrate --force
+      - mkdir -p storage/framework/{sessions,cache,views}
+data.db:
+  image: nanobox/mysql:5.6
+
+data.storage:
+  image: nanobox/unfs:0.9
+
+web.main:
+  start: php-server
+  writable_dirs:
+    - bootstrap/cache
+  log_watch:
+    laravel[error]: /app/storage/logs/laravel.log
+  network_dirs:
+    data.storage:
+      - storage
