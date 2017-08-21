@@ -17,5 +17,7 @@
 		<input class="form-control" type="password" id="password_login" name="password" placeholder="Password" required>
 
 		<button class="btn btn-lg btn-primary btn-block" type="submit">Log In</button>
+
+		@include('components.errordisplay')
 	</form>
 @endsection

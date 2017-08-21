@@ -23,7 +23,7 @@ class SessionsController extends Controller
 
 		if(!auth()->attempt(request(['email', 'password']))) {
 
-			return back();
+			return back()->withErrors(['message' => 'Email or password incorrect']);
 		}
 
 		return redirect('tasks');
