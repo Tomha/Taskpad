@@ -10,6 +10,8 @@ Route::get('/logout', 'SessionsController@destroy');
 Route::get('/tasks', 'TasksController@index');
 Route::get('/tasks/create', 'TasksController@create');
 Route::post('/tasks', 'TasksController@store');
+Route::post('/tasks/complete/{task}', 'TasksController@edit');
+Route::get('/tasks/complete/{task}', 'TasksController@edit');
 
 Route::get('/', 'WelcomeController@index');
 Route::get('/home', 'WelcomeController@index');

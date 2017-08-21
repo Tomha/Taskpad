@@ -48,4 +48,17 @@ class TasksController extends Controller
 
 	}
 
+	public function edit($id) {
+		$task = Task::find($id);
+
+		if($task->complete) {
+			return back()->withErrors(['message' => 'Task is already complete']);
+		}
+
+		$task->completed=true;
+		$task->save();
+
+		return redirect('tasks');
+	}
+
 }
