@@ -22,7 +22,6 @@ class SessionsController extends Controller
 	public function store() {
 
 		if(!auth()->attempt(request(['email', 'password']))) {
-
 			return back()->withErrors(['message' => 'Email or password incorrect']);
 		}
 

@@ -7,17 +7,16 @@ use App\Task;
 
 class TasksController extends Controller
 {
-    //
 	public function __construct() {
-
+	
 		$this->middleware('auth');
-
+	
 	}
 
 	public function index() {
 
 		$tasks = Task::Incomplete()->where('user_id', auth()->id());
-
+		
 		return view('tasks.index', compact('tasks'));
 
 	}
@@ -25,7 +24,7 @@ class TasksController extends Controller
 	public function create() {
 
 		return view('tasks.create');
-
+	
 	}
 
 	public function store() {
@@ -44,11 +43,8 @@ class TasksController extends Controller
 
 	}
 
-	public function show() {
-
-	}
-
 	public function edit($id) {
+
 		$task = Task::find($id);
 
 		if($task->complete) {
@@ -60,6 +56,7 @@ class TasksController extends Controller
 		$task->save();
 
 		return redirect('tasks');
+		
 	}
 
 }

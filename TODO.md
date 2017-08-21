@@ -2,7 +2,6 @@
 
 ## Fixes
 - /tasks pages dont redirect based on auth
-- Allow blank descriptions
 - Task creation page still uses internal CSS
 
 ## Improvements
