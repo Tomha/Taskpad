@@ -4,17 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Task;
+use Carbon\Carbon;
 
 class TasksController extends Controller
 {
-	public function __construct() {
-	
-		$this->middleware('auth');
-	
-	}
 
 	public function index() {
-
+		
 		$tasks = Task::Incomplete()->where('user_id', auth()->id());
 		
 		return view('tasks.index', compact('tasks'));
@@ -22,7 +18,7 @@ class TasksController extends Controller
 	}
 
 	public function create() {
-
+		
 		return view('tasks.create');
 	
 	}
@@ -30,13 +26,13 @@ class TasksController extends Controller
 	public function store() {
 
 		$this->validate(request(), [
-			'title'=>'required'
+			'title' => 'required'
 		]);
-
+		
 		Task::create([
-			'user_id'=>auth()->id(),
-			'title'=>request('title'),
-			'description'=>request('descriptions') ? request('descriptions') : ''
+			'user_id' => auth()->id(),
+			'title' => request('title'),
+			'description' => request('description') ? request('description') : ''
 		]);
 
 		return redirect('tasks');
@@ -44,7 +40,7 @@ class TasksController extends Controller
 	}
 
 	public function edit($id) {
-
+		
 		$task = Task::find($id);
 
 		if($task->complete) {
@@ -56,7 +52,7 @@ class TasksController extends Controller
 		$task->save();
 
 		return redirect('tasks');
-		
+
 	}
 
 }

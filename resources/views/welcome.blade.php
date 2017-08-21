@@ -1,33 +1,34 @@
-<!doctype html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<title>Taskpad</title>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-		<link rel="stylesheet" href="css/welcome.css">
-	</head>
-	<body>
+@extends('layouts.master')
 
-		<div class="site-wrapper">
-		  <div class="site-wrapper-inner">
-			<div class="cover-container">
+@section('title')
+	Welcome
+@endsection
 
-			  <div class="inner cover">
-				<h1 class="cover-heading">Welcome to Taskpad</h1>
-				<p class="lead">Taskpad is a simple tool for keeping track of everything you have to do in the day.</p>
-				<div class="lead">
-				  <a href="/login" class="btn btn-lg btn-secondary">Log In</a>
-				  <a href="/register" class="btn btn-lg btn-secondary">Register</a>
-				</div>
-			  </div>
+@section('content')
 
-			</div>
-		  </div>
+	<div class="jumbotron">
+		<div class="container">
+			<h1 class="display-3">Taskpad</h1>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas convallis ipsum tempus orci condimentum vehicula. Nullam laoreet erat mi, ut aliquam nulla tempus ut. Phasellus viverra vel turpis sit amet fermentum. </p>
+			<p><a class="btn btn-primary btn-lg" href="/register" role="button">Register</a></p>
 		</div>
+	</div>
 
-	</body>
-</html>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4">
+				<h2>Feature 1</h2>
+				<p>Mauris mattis porta turpis, ut vulputate urna imperdiet et. Donec convallis, dui vitae sodales hendrerit, erat ipsum sagittis nisl, in condimentum est tellus eget risus.</p>
+			</div>
+			<div class="col-md-4">
+				<h2>Feature 2</h2>
+				<p>Etiam vitae venenatis neque, ac auctor lacus. Aenean aliquam lacinia consectetur. Pellentesque quis felis sit amet purus auctor iaculis eu in tellus.</p>
+			</div>
+			<div class="col-md-4">
+				<h2>Feature 3</h2>
+				<p>Duis eget condimentum leo, ut varius urna. Nullam non nunc mauris. Donec eget neque mi. Vivamus commodo, augue id suscipit tempor, magna sapien cursus turpis, ac eleifend massa lectus in ex.</p>
+			</div>
+		</div>
+	</div>
 
-
-
+@endsection
