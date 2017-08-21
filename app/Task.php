@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 use App\User;
 
 class Task extends Model
@@ -13,8 +14,8 @@ class Task extends Model
     ];
 
     public function scopeIncomplete() {
-		return $this::where('completed', 'true')->get();
-    }
+		return $this::where('completed', 'false')->get();
+	}
 
 	public function user() {
 		return $this->belongsTo(User::class);

@@ -56,6 +56,7 @@ class TasksController extends Controller
 		}
 
 		$task->completed=true;
+		$task->completed_at=Carbon::now();
 		$task->save();
 
 		return redirect('tasks');
