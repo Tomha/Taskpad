@@ -5,7 +5,8 @@
 @endsection
 
 @section('style')
-	/*
+	<style>
+		/*
 	 * Globals
 	 */
 
@@ -83,6 +84,7 @@
 	input, textarea {
 		margin-bottom: 5px;
 	}
+	</style>
 @endsection
 
 @section('title')

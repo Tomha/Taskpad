@@ -37,7 +37,7 @@ class TasksController extends Controller
 		Task::create([
 			'user_id'=>auth()->id(),
 			'title'=>request('title'),
-			'description'=>request('description')
+			'description'=>request('descriptions') ? request('descriptions') : ''
 		]);
 
 		return redirect('tasks');
