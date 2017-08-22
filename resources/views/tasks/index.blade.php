@@ -8,13 +8,13 @@
 <style>
 
 	#task-frame {
-		border: solid #bbb 1px;
-		border-radius: 5px;
-		margin-bottom: 10px;
-		min-height: 20px;
+		background-color: #fff;
+		border: solid #aaa 1px;
+		border-radius: 8px;
+		width: 100%;
 	}
 
-	.task {
+	#task {
 		border-bottom: solid #ddd 1px;
 		padding: 5px;
 		display: block;
@@ -22,94 +22,128 @@
 		white-space: nowrap;
 	}
 
-	#task-info {
-		margin: 0px;
+	#task *, .list-unstyled {
+		margin-bottom: 0px;
 	}
 
-	form {
-		margin: 0px;
+	.section {
+		border-radius: 5px;
+		background-color: #eee;
+		padding: 15px;
 	}
 
-	#create-task {
-		margin-bottom: 10px;
+	#graph {
+		margin-left: 20px;
 	}
 
-	#burndown-box {
-		display: block;
-		margin: auto;
-		max-width: 500px;
-		max-height: 200px;
-		margin-bottom: 50px;
+	#checkbox {
+		color: eee;
+		border-radius: 2px;
+		border: 1px #aaa solid;
+		margin-right: 5px;
+		cursor: pointer;
+		padding: 0px 3px 0px 3px;
+	}
+
+	#checkbox:hover {
+		color: #888;
+	}
+
+	#add-task-notice {
+		color: #ddd;
+		font-size: 42px;
+		text-align: center;
+		margin: 10px;
 	}
 
 </style>
 
 @section('content')
+	<div id="tasks-app">
+		
+		<div class="row">
+			
+			<div class="col section">
+				<h1 class="form-heading">Add a Task:</h1>
+				<form>
+					<div class="form-group" :class="form.errors.class('title')">
+						<label class="control-label" for="title">Title</label>
+						<input class="form-control" type="text" id="title" name="title" v-model="form.title" @keydown="clear('name')">
+						<span v-text="form.errors.get('title')" v-if="form.errors.has('title')"></span>
+					</div>
 
-	<ul class="list-unstyled" id="task-frame">
-		@if(!$tasks->count())
-			<li class="task">Create some tasks!</li>
-		@else
-			@foreach ($tasks as $task)
-				<li class="task">
-					<form method="POST" action={{"/tasks/complete/" . $task->id}} id={{"form_" . $task->id}}>
-						{{ csrf_field() }}
-						<input type="checkbox" id="task-complete" name="complete" onclick={{ 'document.getElementById("form_' . $task->id . '").submit()' }}>
-						<label for="complete" id="task-info"><span style="font-weight:bold">{{ $task->title }}</span> {{ !$task->description ? '' : ' - ' . $task->description }}</label>
-					</form>		
-				</li>
-			@endforeach
-		@endif
-	</ul>
+					<div class="form-group" :class="form.errors.class('description')">
+						<label class="control-label" for="description">Description (Optional)</label>
+						<textarea class="form-control" type="text" id="description" name="description" v-model="form.description" @keydown="clear('description')"></textarea>
+						<span v-text="form.errors.get('description')" v-if="form.errors.has('description')"></span>
+					</div>
 
-	<a href="/tasks/create" class="btn btn-lg btn-primary" id='create-task'>Add Task</a>
+					<button class="btn btn-primary form-btn" type="submit" :disabled="form.errors.any()" @click.prevent="onSubmit">Add Task</button>
+					<span class="form-success" v-if="form.success">Success!</span>
+				</form>
+			</div>
 
-	<div id="burndown-box">
-		<canvas id="burndown-graph"></canvas>
+			<div id="graph" class="col section">
+				<div style="width:auto; height:100%; background-color:#aaa; color:#888 corner-radius:5px;">Graph</div>
+			</div>
+
+		</div>
+		
+		<div class="row section">
+			<h1 class="form-heading">Tasks:</h1>
+			<div id="task-frame">
+				<p v-if="tasks.length == 0" id="add-task-notice">Add a task to get started!</p>
+				<ul class="list-unstyled">
+					<task v-for="task in tasks" @completed="onComplete(task.id)">@{{ task.title }}</task>
+				</ul>
+			</div>
+		</div>
+
 	</div>
-
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+	
+	<script src="{{ asset('js/app.js') }}">></script>
+	<script src="{{ asset('js/master.js') }}">></script>
 	<script>
-		var ctx = document.getElementById("burndown-graph").getContext('2d');
-		var myChart = new Chart(ctx, {
-			type: 'line',
+		Vue.component('task', {  
+			template: '<li id="task"><span id="checkbox" @click="$emit(\'completed\', \'test\')">✔</span><slot></slot><li>'
+		});
+
+		new Vue({
+			el: '#tasks-app',
+		
 			data: {
-				labels: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,
-						21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,
-						41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60],
-				datasets: [{
-					data: [20,19,18,14,13,14,15,16,14,13,12,13,21,21,20,20,20,19,19,19],
-				}]
+				form: new Form({
+					title: '',
+					description: ''
+				}),
+				tasks: { }
 			},
-			options: {
-				elements: {
-					line: {
-						tension: 0,
-					},
-					point: {
-						radius: 0,
-					}
+
+			methods: {
+				onSubmit() {
+					this.form.post('tasks');
+					this.getTasks();
 				},
-		        title: {
-					display: true,
-					text: 'Remaining Items (Past Hour)',
-					fontSize: 24
+
+				onComplete(id) {			
+					axios.post('/tasks/complete/' + id)
+						.then(this.getTasks())
+						.catch();
 				},
-				legend: {
-					display: false
+
+				clear(element) {
+					this.form.errors.clear(element);
+					this.form.clearSuccess()
 				},
-				scales:
-				{
-					xAxes: [{
-						display: false
-					}],
-					yAxes: [{
-						display: true,
-						ticks: {
-							beginAtZero: true
-						}
-					}]
+
+				getTasks() {
+					axios.get('/tasks/get')
+						.then(response => this.tasks = response.data);
 				}
+			},
+
+			mounted() {
+				this.getTasks();
 			}
 		});
 	</script>

@@ -12,7 +12,6 @@ class TasksController extends Controller
 	public function index() {
 		
 		$tasks = Task::Incomplete()->where('user_id', auth()->id());
-		
 		return view('tasks.index', compact('tasks'));
 
 	}
@@ -21,6 +20,12 @@ class TasksController extends Controller
 		
 		return view('tasks.create');
 	
+	}
+
+	public function get() {
+
+		return Task::Incomplete()->where('user_id', auth()->id());
+
 	}
 
 	public function store() {

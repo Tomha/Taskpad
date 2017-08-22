@@ -15,15 +15,12 @@
 		#email {
 			border-bottom-left-radius: 0px;
 			border-bottom-right-radius: 0px;
+			margin-bottom: -1px;
 		}
 
 		#password {
 			border-top-left-radius: 0px;
 			border-top-right-radius: 0px;
-			margin-bottom: 10px;
-		}
-
-		#submit {
 			margin-bottom: 10px;
 		}
 	</style>
