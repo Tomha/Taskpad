@@ -12,28 +12,33 @@
 
     </head>
     <body>
-        <div class="page-header">
-            <div class="container">
-                <nav class="nav">
-                <a class="nav-link" id="nav-title" href="/">Taskpad</a>
-                @if(auth()->check())
-                    <a class="nav-link btn btn-primary ml-auto" id="nav-button" href="/logout">Logout</a>
-                @else
-                    <a class="nav-link btn btn-primary ml-auto" id="nav-button" href="/login">Log In</a>
-                    <a class="nav-link btn btn-primary" id="nav-button" href="/register">Register</a>
-                @endif
-                </nav>
+        <div id="page-container">
+        
+            <div id="page-header">
+                <div class="container">
+                    <nav class="nav">
+                        <a class="nav-link" id="nav-title" href="/">Taskpad</a>
+                        @if(auth()->check())
+                            <a class="nav-link btn btn-primary ml-auto" id="nav-button" href="/logout">Logout</a>
+                        @else
+                            <a class="nav-link btn btn-primary ml-auto" id="nav-button" href="/login">Log In</a>
+                            <a class="nav-link btn btn-primary" id="nav-button" href="/register">Register</a>
+                        @endif
+                    </nav>
+                </div>
             </div>
-        </div>
+                
+            <div id="page-content" class="container">
+                @yield('content')
+            </div>
+
+            <footer id="page-footer">
+                <p id="legal">© Taskpad 2017</p>
+                <a id="github-link" href="https://github.com/tomha/taskpad">Visit on Github</a>
+            </footer>
             
-        <div class="container">
-            @yield('content')
         </div>
 
-        <footer class="page-footer">
-            <p>© Taskpad 2017<p>
-            <a href="https://github.com/tomha/taskpad">Visit on Github</a>
-        </footer>
 
     </body>
 </html>
