@@ -30,7 +30,6 @@
 		display: block;
 		text-overflow: ellipsis;
 		overflow: hidden;
-		white-space: nowrap;
 	}
 
 	#task-checkbox {
@@ -50,6 +49,7 @@
 	#task-notes {
 		margin-left: 5px;
 		color: #aaa;
+		cursor: pointer;
 	}
 
 	#add-task-notice {
@@ -62,6 +62,10 @@
 	#graph-section {
 		margin-left: 20px;
 		max-height: 30%;
+	}
+
+	.nowrap {
+		white-space: nowrap;
 	}
 
 </style>
@@ -120,7 +124,13 @@
 		window.Event = new Vue();
 
 		Vue.component('task', {  
-			template: "<li id='task'><span id='task-checkbox' @click=\"$emit(\'completed\', \'test\')\">✔</span><span id='task-text'><slot id='task-title' name='title'></slot><slot id='task-notes' name='notes'></slot></span></li>"
+			template: "<li id='task' :class='{\"nowrap\":hidden}'@click='hidden=!hidden'><span id='task-checkbox' @click=\"$emit(\'completed\', \'test\')\">✔</span><span id='task-text'><slot id='task-title' name='title'></slot><slot id='task-notes' name='notes'></slot></span></li>",
+		
+			data() {
+				return {
+					hidden: true
+				}
+			}
 		});
 
 		Vue.component('graph', {
