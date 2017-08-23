@@ -28,6 +28,19 @@ class TasksController extends Controller
 
 	}
 
+	public function getIncomplete() {
+		$incompleteCounts = [];
+
+		$deadline = Carbon::Now()->subMinutes(20);
+
+		for($i = 0; $i < 59; $i++) { // TODO: Figure out how to cache the last 58 queries
+			$deadline = Carbon::Now()->subMinutes($i);
+			$incompleteCounts[$i] = Task::CreatedBefore($deadline)->count() - Task::CompletedBefore($deadline)->count();
+		}
+
+		return $incompleteCounts;
+	}
+
 	public function store() {
 
 		$this->validate(request(), [

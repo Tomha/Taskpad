@@ -32,10 +32,6 @@
 		padding: 15px;
 	}
 
-	#graph {
-		margin-left: 20px;
-	}
-
 	#checkbox {
 		color: eee;
 		border-radius: 2px;
@@ -54,6 +50,11 @@
 		font-size: 42px;
 		text-align: center;
 		margin: 10px;
+	}
+
+	#graph-section {
+		margin-left: 20px;
+		max-height: 30%;
 	}
 
 </style>
@@ -83,8 +84,9 @@
 				</form>
 			</div>
 
-			<div id="graph" class="col section">
-				<div style="width:auto; height:100%; background-color:#aaa; color:#888 corner-radius:5px;">Graph</div>
+			<div id="graph-section" class="col section">
+				<h1 class="form-heading">Tasks Remaining(Past Hour):</h1>
+				<graph :values="remainingTaskCount"></graph>
 			</div>
 
 		</div>
@@ -101,11 +103,76 @@
 
 	</div>
 	
-	<script src="{{ asset('js/app.js') }}">></script>
-	<script src="{{ asset('js/master.js') }}">></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.min.js"></script>
+	<script src="{{ asset('js/app.js') }}"></script>
+	<script src="{{ asset('js/master.js') }}"></script>
 	<script>
+		window.Event = new Vue();
+
 		Vue.component('task', {  
 			template: '<li id="task"><span id="checkbox" @click="$emit(\'completed\', \'test\')">✔</span><slot></slot><li>'
+		});
+
+		Vue.component('graph', {
+			template: '<canvas></canvas>',
+
+			props: {
+				values: {}
+			},
+
+			data() {
+				this.graph = {};
+			},
+
+			methods: {
+				updateTaskGraph() {
+					this.graph.update();
+				},
+			},
+
+			mounted() {
+				var labels = [];
+				for(let i = 1; i < 61; i++) {
+					labels.push('');
+				}
+
+				var data = {
+					labels: labels,
+					datasets: [{ 
+						data: this.values,
+						radius: 0,
+					}],
+				};
+
+				var options = {
+					scales: {
+						yAxes: [{
+							ticks: {
+								beginAtZero: true,
+							},
+						}],
+						xAxes: [{
+							display: true,
+						}],
+					},
+					legend: {
+						display: false
+					},
+					elements: {
+						line: {
+							tension: 0.1,
+						}
+					}
+				};
+
+				this.graph = new Chart(this.$el.getContext('2d'), {
+					type: 'line',
+					data: data,
+					options: options
+				});
+
+				Event.$on('update-graph', () => this.updateTaskGraph());
+			}
 		});
 
 		new Vue({
@@ -116,19 +183,27 @@
 					title: '',
 					description: ''
 				}),
-				tasks: { }
+				tasks: { },
+				remainingTaskCount: []
 			},
 
 			methods: {
 				onSubmit() {
-					this.form.post('tasks');
-					this.getTasks();
+					this.form.post('tasks')
+						.then(() => {
+							this.remainingTaskCount[0] += 1;
+							this.updateTaskGraph();
+							this.getTasks();
+						});
 				},
 
 				onComplete(id) {			
 					axios.post('/tasks/complete/' + id)
-						.then(this.getTasks())
-						.catch();
+						.then(() => {
+							this.remainingTaskCount[0] -= 1;
+							this.updateTaskGraph();
+							this.getTasks();
+						});
 				},
 
 				clear(element) {
@@ -139,11 +214,32 @@
 				getTasks() {
 					axios.get('/tasks/get')
 						.then(response => this.tasks = response.data);
+				},
+
+				updateTaskGraph() {
+					Event.$emit('update-graph');
+				},
+
+				updateRemainingTaskCount() {
+					axios.get('/tasks/get-incomplete')
+						.then(response => {
+							this.remainingTaskCount[0] = response.data[0]; // 0th entry represents current minute-in-progress
+							for(let i = 0; i < 59; i++) {
+								this.remainingTaskCount[i+1] = response.data[i];
+							}
+							this.updateTaskGraph();
+						});
 				}
 			},
 
 			mounted() {
 				this.getTasks();
+
+				for(let i = 0; i < 60; i++) {
+					this.remainingTaskCount.push(0);
+				}
+				this.updateRemainingTaskCount();
+				setInterval(this.updateRemainingTaskCount,60000);
 			}
 		});
 	</script>
