@@ -7,6 +7,16 @@
 @section('style')
 <style>
 
+	.section {
+		border-radius: 5px;
+		background-color: #eee;
+		padding: 15px;
+	}
+
+	.list-unstyled {
+		margin-bottom: 0px;
+	}
+
 	#task-frame {
 		background-color: #fff;
 		border: solid #aaa 1px;
@@ -18,31 +28,28 @@
 		border-bottom: solid #ddd 1px;
 		padding: 5px;
 		display: block;
+		text-overflow: ellipsis;
 		overflow: hidden;
 		white-space: nowrap;
 	}
 
-	#task *, .list-unstyled {
-		margin-bottom: 0px;
-	}
-
-	.section {
-		border-radius: 5px;
-		background-color: #eee;
-		padding: 15px;
-	}
-
-	#checkbox {
+	#task-checkbox {
 		color: eee;
 		border-radius: 2px;
 		border: 1px #aaa solid;
 		margin-right: 5px;
 		cursor: pointer;
 		padding: 0px 3px 0px 3px;
+		overflow: hidden;
 	}
 
-	#checkbox:hover {
+	#task-checkbox:hover {
 		color: #888;
+	}
+
+	#task-notes {
+		margin-left: 5px;
+		color: #aaa;
 	}
 
 	#add-task-notice {
@@ -96,7 +103,10 @@
 			<div id="task-frame">
 				<p v-if="tasks.length == 0" id="add-task-notice">Add a task to get started!</p>
 				<ul class="list-unstyled">
-					<task v-for="task in tasks" @completed="onComplete(task.id)">@{{ task.title }}</task>
+					<task v-for="task in tasks" @completed="onComplete(task.id)">
+						<span id="task-title" slot='title'>@{{ task.title }}</span>
+						<span id="task-notes" slot='notes'>@{{ task.description }}</span>
+					</task>
 				</ul>
 			</div>
 		</div>
@@ -110,7 +120,7 @@
 		window.Event = new Vue();
 
 		Vue.component('task', {  
-			template: '<li id="task"><span id="checkbox" @click="$emit(\'completed\', \'test\')">✔</span><slot></slot><li>'
+			template: "<li id='task'><span id='task-checkbox' @click=\"$emit(\'completed\', \'test\')\">✔</span><span id='task-text'><slot id='task-title' name='title'></slot><slot id='task-notes' name='notes'></slot></span></li>"
 		});
 
 		Vue.component('graph', {
