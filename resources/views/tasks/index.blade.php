@@ -67,7 +67,6 @@
 	.nowrap {
 		white-space: nowrap;
 	}
-
 </style>
 
 @section('content')
@@ -91,7 +90,8 @@
 					</div>
 
 					<button class="btn btn-primary form-btn" type="submit" :disabled="form.errors.any()" @click.prevent="onSubmit">Add Task</button>
-					<span class="form-success" v-if="form.success">Success!</span>
+					<span class="has-success" v-if="form.success">Success!</span>
+
 				</form>
 			</div>
 

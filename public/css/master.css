@@ -88,14 +88,12 @@ body, html {
 
 .has-error {
   color: #710000;
-  font-size: 12px;
+  font-size: 14px;
   font-style: italic;
 }
 
-.form-success {
+.has-success {
   color: #067100;
-  font-size: 24px;
+  font-size: 16px;
   font-style: italic;
-  vertical-align: middle;
-  margin-left: 20px;
 }
