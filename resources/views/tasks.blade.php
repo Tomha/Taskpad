@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('master')
 
 @section('title')
 	Tasks
@@ -233,7 +233,7 @@
 				},
 
 				getTasks() {
-					axios.get('/tasks/get')
+					axios.get('/tasks/remaining')
 						.then(response => this.tasks = response.data);
 				},
 
@@ -242,7 +242,7 @@
 				},
 
 				updateRemainingTaskCount() {
-					axios.get('/tasks/get-incomplete')
+					axios.get('/tasks/remaining/counts')
 						.then(response => {
 							this.remainingTaskCount[0] = response.data[0]; // 0th entry represents current minute-in-progress
 							for(let i = 0; i < 59; i++) {
