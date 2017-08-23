@@ -14,19 +14,23 @@ class Task extends Model
     ];
 
     public function scopeIncomplete($query) {
-		return $this::where('completed', 0)->get();
+		return $query->where('completed', 0);
 	}
 	
 	public function scopeComplete($query) {
-		return $this::where('completed', 1)->get();
+		return $query->where('completed', 1);
 	}
 
 	public function scopeCreatedBefore($query, $time) {
-		return $this::where('created_at', '<', $time)->get();
+		return $query->where('created_at', '<', $time);
 	}
 
 	public function scopeCompletedBefore($query, $time) {
-		return $this::where('completed_at', '<', $time)->get();
+		return $query->where('completed_at', '<', $time);
+	}
+
+	public function scopeUserId($query, $user_id) {
+		return $query->where('user_id', $user_id);
 	}
 
 	public function user() {

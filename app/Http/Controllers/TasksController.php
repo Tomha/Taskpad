@@ -11,7 +11,7 @@ class TasksController extends Controller
 
 	public function index() {
 		
-		$tasks = Task::Incomplete()->where('user_id', auth()->id());
+		$tasks = Task::Incomplete()->where('user_id', auth()->id())->get();
 		return view('tasks.index', compact('tasks'));
 
 	}
@@ -24,18 +24,18 @@ class TasksController extends Controller
 
 	public function get() {
 
-		return Task::Incomplete()->where('user_id', auth()->id());
+		return Task::Incomplete()->where('user_id', auth()->id())->get();
 
 	}
 
 	public function getIncomplete() {
 		$incompleteCounts = [];
 
-		$deadline = Carbon::Now()->subMinutes(20);
+		$user_id = auth()->id();
 
 		for($i = 0; $i < 59; $i++) { // TODO: Figure out how to cache the last 58 queries
 			$deadline = Carbon::Now()->subMinutes($i);
-			$incompleteCounts[$i] = Task::CreatedBefore($deadline)->count() - Task::CompletedBefore($deadline)->count();
+			$incompleteCounts[$i] = Task::UserId($user_id)->CreatedBefore($deadline)->count() - Task::UserId($user_id)->CompletedBefore($deadline)->count();
 		}
 
 		return $incompleteCounts;
