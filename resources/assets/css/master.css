@@ -97,35 +97,3 @@ body, html {
     font-size: 16px;
     font-style: italic;
   }
-.section {
-    border-radius: 5px;
-    background-color: #eee;
-    padding: 15px;
-}
-
-.list-unstyled {
-    margin-bottom: 0px;
-}
-
-#task-frame {
-    background-color: #fff;
-    border: solid #aaa 1px;
-    border-radius: 8px;
-    width: 100%;
-}
-
-#add-task-notice {
-    color: #ddd;
-    font-size: 42px;
-    text-align: center;
-    margin: 10px;
-}
-
-#graph-section {
-    margin-left: 20px;
-    max-height: 30%;
-}
-
-.nowrap {
-    white-space: nowrap;
-}

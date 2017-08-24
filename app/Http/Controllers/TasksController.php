@@ -29,14 +29,14 @@ class TasksController extends Controller
 	public function remainingCounts() {
 
 		$user_id = auth()->id();
-		$user_tasks = Task::UserId($user_id);
 		$counts = [];
 
 		for($i = 0; $i < 59; $i++) {
 			$time = Carbon::Now()->subMinutes($i);
-			$counts[$i] = $user_tasks->CreatedBefore($time)->count() - $user_tasks->CompletedBefore($time)->count();
+			$allCount = Task::UserID($user_id)->CreatedBefore($time)->count();
+			$completeCount =Task::UserID($user_id)->CompletedBefore($time)->count();
+			$counts[$i] = $allCount - $completeCount;
 		}
-
 		return $counts;
 		
 	}
@@ -65,11 +65,12 @@ class TasksController extends Controller
             return back()->withErrors(['message' => 'No logged in user']);
 		}
 
-		$task = Task::find($id);
-		if(!$task.user_id == auth().id) {
-            return back()->withErrors(['message' => 'You cant complete another user\'s task!']);
-		}
+		// Not Working Yet
+		//if($user != auth().id) {
+        //    return back()->withErrors(['message' => 'You cant complete another user\'s task!']);
+		//}
 
+		$task = Task::find($id);
 		$task->completed=true;
 		$task->completed_at=Carbon::now();
 		$task->save();

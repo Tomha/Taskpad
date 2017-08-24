@@ -15,6 +15,12 @@ run.config:
       - xml
       - ctype
       - xmlwriter
+  extra_packages:
+    - nodejs
+  extra_steps:
+    - npm install
+  cache_dirs:
+    - node_modules
 
 deploy.config:
   before_live:
