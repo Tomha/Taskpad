@@ -5,12 +5,13 @@ Taskpad is a simple Laravel app for keeping a list of tasks you wish to complete
 To get things working on Nanobox:
 1. `git clone http://github.com/tomha/taskpad`
 2. `cd taskpad`
-3. `nanobox run` to setup
-3. You may need to `cp .env.example .env && nanobox run php artisan 
-key:generate`
-4. `nanobox dns add local taskpad`
-5. `nanobox run php artisan serve --host 0.0.0.0`
-6. Visit Taskpad at taskpad:8000 on your browser of choice
+3. `nanobox build-runtime`
+4. `cp .env.example .env`
+5. `nanobox run php artisan key:generate`
+6. `nanobox run php artisan migrate`
+7. `nanobox dns add local taskpad`
+8. `nanobox run php artisan serve --host 0.0.0.0`
+9. View at `taskpad:8000` in your browser - I used Firefox and havent tested CSS on other browsers.
 
 # Tests (OUTDATED)
 **Note:** This was how I did it under Homestead, I'm yet to sort this out for Nanobox.
