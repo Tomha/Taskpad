@@ -458,7 +458,7 @@ exports = module.exports = __webpack_require__(41)(undefined);
 
 
 // module
-exports.push([module.i, "\n#task {\n    border-bottom: solid #ddd 1px;\n    padding: 5px;\n    display: block;\n    text-overflow: ellipsis;\n    overflow: hidden;\n}\n#task-checkbox {\n    color: eee;\n    border-radius: 2px;\n    border: 1px #aaa solid;\n    margin-right: 5px;\n    cursor: pointer;\n    padding: 0px 3px 0px 3px;\n    overflow: hidden;\n}\n#task-checkbox:hover {\n    color: #888;\n}\n#task-notes {\n    margin-left: 5px;\n    color: #aaa;\n    cursor: pointer;\n}\n", ""]);
+exports.push([module.i, "\n#task {\n    border-bottom: solid #ddd 1px;\n    padding: 5px;\n    display: block;\n    text-overflow: ellipsis;\n    overflow: hidden;\n}\n#task-checkbox {\n    color: eee;\n    border-radius: 2px;\n    border: 1px #aaa solid;\n    margin-right: 5px;\n    cursor: pointer;\n    padding: 0px 3px 0px 3px;\n    overflow: hidden;\n    color: #ccc;\n}\n#task-checkbox:hover {\n    color: #000;\n}\n#task-notes {\n    margin-left: 5px;\n    color: #aaa;\n    cursor: pointer;\n}\n", ""]);
 
 // exports
 

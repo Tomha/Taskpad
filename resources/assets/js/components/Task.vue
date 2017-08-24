@@ -35,10 +35,11 @@
         cursor: pointer;
         padding: 0px 3px 0px 3px;
         overflow: hidden;
+        color: #ccc;
     }
 
     #task-checkbox:hover {
-        color: #888;
+        color: #000;
     }
 
     #task-notes {
