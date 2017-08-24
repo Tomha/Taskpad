@@ -23,10 +23,10 @@
 						<label class="control-label" for="description">Description (Optional)</label>
 						<textarea class="form-control" type="text" id="description" name="description" v-model="form.description" @keydown="clear('description')"></textarea>
 						<span v-text="form.errors.get('description')" v-if="form.errors.has('description')"></span>
+						<span class="has-success" v-show="form.success">Success!</span>
 					</div>
 
 					<button class="btn btn-primary form-btn" type="submit" :disabled="form.errors.any()" @click.prevent="onSubmit">Add Task</button>
-					<span class="has-success" v-if="form.success">Success!</span>
 
 				</form>
 			</div>
